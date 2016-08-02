@@ -12,11 +12,6 @@ class itu_unit {
         ut.add(&itu_unit::sanity);
         ut.add(&itu_unit::create_url);
         ut.add(&itu_unit::relative_url);
-        //ut.add(&ict_unit::cloned);
-        //ut.add(&ict_unit::cloned_derived);
-        //ut.add(&ict_unit::cloned_vector);
-        //ut.add(&ict_unit::cloned_multivector);
-        ut.add(&itu_unit::osstream);
     }
 
     /* Tests */
@@ -26,10 +21,5 @@ class itu_unit {
     void sanity();
     void create_url();
     void relative_url();
-    //void cloned();
-    //void cloned_derived();
-    //void cloned_vector();
-    //void cloned_multivector();
-    void osstream();
 };
 

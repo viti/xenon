@@ -199,28 +199,6 @@ void itu_unit::relative_url() {
     }
 }
 
-void itu_unit::osstream() {
-    ict::osstream os;
-    std::ostringstream sos;
-    auto words = std::vector<std::string> { "zymosan", "zymosans", "zymoscope", "zymoses", "zymosimeter",
-        "zymosis", "zymosterol", "zymosthenic", "zymotechnic", "zymotechnical", "zymotechnics",
-        "zymotechny", "zymotic", "zymotically", "zymotize", "zymotoxic", "zymurgies",
-        "zymurgy", "zythem", "zythum", "zyzzyva", "zyzzyvas" };
-
-    for (auto & i : words) {
-        os << i;
-        sos << i;
-    }
-    IT_ASSERT(os.str() == sos.str());
-
-    os << 1;
-    sos << 1;
-    IT_ASSERT_MSG(os.str() << " == " << sos.str(), os.str() == sos.str());
-}
-
-
-
-
 int main (int, char **) {
     itu_unit test;
     ict::unit_test<itu_unit> ut(&test);

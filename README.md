@@ -3,7 +3,7 @@ The Intrig message decoder.
 
 ## Quick Start
 
-    git clone https://github.com/intrig/xenon.git
+    git clone --recursive https://github.com/intrig/xenon.git
     cd xenon
     make 
     make test

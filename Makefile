@@ -28,6 +28,9 @@ tags:
 	ctags --file-tags=yes --language-force=C++ -L o/flist
 	@echo tags complete.
 
+update:
+	git submodule foreach git pull origin master
+
 # tags on mac
 mtags:
 	mkdir -p o
