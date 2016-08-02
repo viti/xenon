@@ -53,5 +53,6 @@ int main (int argc, char **argv) {
         return ut.run();
     } catch (std::exception & e) {
         std::cerr << e.what() << '\n';
+        return 1;
     }
 }

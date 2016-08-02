@@ -9,8 +9,6 @@ class load_unit {
     public:
 
     void register_tests(ict::unit_test<load_unit> & ut) {
-        ut.skip();
-        ut.cont();
         ut.add(&load_unit::load_all_specs);
     }
 
