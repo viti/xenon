@@ -40,11 +40,12 @@ namespace xenon {
     class XmlAttribute
     {
         public:
-        XmlAttribute(std::string const & s) : content(s) { }
+        explicit XmlAttribute(std::string const & s) : content(s) { }
         std::string content;
     };
 
-    inline std::ostream & operator<<(std::ostream & os, XmlAttribute const & cd) {
+    template <typename S>
+    inline S & operator<<(S & os, XmlAttribute const & cd) {
         for (auto it=cd.content.begin(); it!= cd.content.end(); ++it)
         {
             switch (*it)
@@ -61,16 +62,17 @@ namespace xenon {
         return os;
     }
 
+    template <typename Stream>
     class Xml : public xml_parser_base {
         class XmlNode {
             public:
             virtual ~XmlNode() {}
-            virtual std::ostream & str(std::ostream & ss, int indent) = 0;
+            virtual Stream & str(Stream & ss, int indent) = 0;
         };
 
         class XmlComment : public XmlNode {
             public:
-            std::ostream & str(std::ostream & ss, int indent) {
+            Stream & str(Stream & ss, int indent) {
                 ss << ict::spaces(indent) << "<!--" << content << "-->\n";
                 return ss;
             }
@@ -80,7 +82,7 @@ namespace xenon {
         class XmlProcInst : public XmlNode {
             public:
 
-            std::ostream & str(std::ostream & ss, int indent) {
+            Stream & str(Stream & ss, int indent) {
                 //ict::replace(content, "iso-8859-1", "UTF-8");
                 ss << ict::spaces(indent) << "<?" << content << "?>\n";
                 return ss;
@@ -160,7 +162,7 @@ namespace xenon {
                 return os.str();
             }
 
-            std::ostream & str(std::ostream & ss, int indent)
+            Stream & str(Stream & ss, int indent)
             {
                 if (name == "&filtered") return ss;
 
@@ -190,8 +192,6 @@ namespace xenon {
                     ss << ict::spaces(indent) << "</" << name << ">\n";
                 }
 
-                //if (indent == 2) ss << "\n";
-
                 return ss;
             }
 
@@ -209,20 +209,8 @@ namespace xenon {
             clear();
         }
 
-        Xml(std::string const & filename, bool show_decl_ = true) : filter(false), show_decl(show_decl_)
-        {
-            clear();
-            std::ifstream is(filename.c_str());
-            std::string line;
-
-            if (!is.good()) IT_PANIC("bad xml filename: \"" << filename << "\"");
-
-            while (!is.eof())
-            {
-                std::getline(is, line);
-                line += '\n';
-                add(line);
-            }
+        Xml(std::string const & s, bool show_decl = true) : filter(false), show_decl(show_decl) {
+            add(s);
         }
 
         std::string str()
@@ -237,7 +225,9 @@ namespace xenon {
             return _code;
         }
 
-        std::ostream & str(std::ostream & ss)
+private:
+        template <typename Str>
+        Str & str(Str & ss)
         {
             elements.push(std::make_shared<XmlElement>());
 
@@ -256,6 +246,7 @@ namespace xenon {
             return ss;
         }
 
+public:
         Xml & add(std::string const & s)
         {
             enum State
@@ -327,10 +318,6 @@ namespace xenon {
             std::string n = name;
             if (filter && (n == "prop" || n == "setprop")) n = "&filtered";
 
-#if 0 // this was added to change fragment defs to record defs
-            if (n == "fragment" && (dict.find("id") != dict.end())) n = "record";
-#endif
-
             elem->name = n;
             elem->atts = dict;
             elements.push(elem);
@@ -376,15 +363,5 @@ namespace xenon {
         std::stack<std::shared_ptr<XmlElement>> elements;
     };
 
-
-    inline Xml & operator<<(Xml & cs, std::string const & str)
-    {
-        return cs.add(str);
-    }
-
-    inline std::ostream & operator<<(std::ostream & os, Xml & xml)
-    {
-        return xml.str(os);
-    }
-
+    using xml_type = Xml<std::ostream>;
 }
