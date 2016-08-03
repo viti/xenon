@@ -36,8 +36,7 @@ int main(int argc, char** argv) {
         if (pretty) {
             time.start();
             for (auto i=0; i < iterations; ++i) {
-                xenon::Xml xml;
-                xml << xenon::to_xml(msg);
+                xenon::xml_type xml(xenon::to_xml(msg));
                 auto x = xml.str();
             }
             time.stop();
