@@ -1,6 +1,6 @@
 //-- Copyright 2016 Intrig
 //-- See https://github.com/intrig/xenon for license.
-#include "xmlperf.h"
+#include "loadperf.h"
 
 #include <boost/filesystem.hpp>
 #include <ict/command.h>
