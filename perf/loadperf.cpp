@@ -38,7 +38,7 @@ int main (int argc, char **argv) {
     try {
         load_unit test;
 
-        ict::command line("xmlperf", "Loading XDDL performance", "xmlperf xddl-dir");
+        ict::command line("loadperf", "Loading XDDL performance", "xmlperf xddl-dir");
         line.add(ict::option("iterations", 'i', "Number of iterations", std::to_string(test.iterations), 
             [&](const std::string & i) {
                 test.iterations = std::stoi(i);

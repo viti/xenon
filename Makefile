@@ -21,6 +21,9 @@ clean:
 test: all
 	make CTEST_OUTPUT_ON_FAILURE=1 -C build test
 
+update:
+	git submodule foreach git pull origin master
+
 tags:
 	mkdir -p o
 	@echo Making tags...
