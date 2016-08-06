@@ -1,4 +1,4 @@
-.PHONY: tags 
+.PHONY: tags perf
 
 all:
 	mkdir -p build
@@ -20,6 +20,12 @@ clean:
 
 test: all
 	make CTEST_OUTPUT_ON_FAILURE=1 -C build test
+
+perf: 
+	build/perf/decodeperf -i 5 --load xddl
+	build/perf/decodeperf -i 10000 xddl
+	build/perf/decodeperf --xml xddl
+	build/perf/decodeperf --pretty xddl
 
 update:
 	git submodule foreach git pull origin master
