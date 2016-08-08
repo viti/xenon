@@ -8,6 +8,11 @@ The Intrig message decoder.
     make 
     make test
 
+## Updating an existing repo to latest
+
+    git pull
+    git submodule update
+
 ## Dependencies
 
     cmake
