@@ -10,7 +10,6 @@
 
 ##<a name="1"/>1 Introduction 
 
-
 Intrig Xenon provides flexible, powerful and easy to use C++ API for decoding protocol messages.
 
 Originally developed for 3G and 4G programmers and test engineers to decode their complex messages, the xenon decoder
